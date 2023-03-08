@@ -19,7 +19,7 @@ class SmartPotBase(
     override val location: Location,
     override var enabled: Boolean,
     override var temperature: Int?,
-    waterVolume: Double,
+    waterVolume: Double = 0.0,
     override var isWaterBoiled: Boolean,
     override val minimumWaterLevel: Double = 1.0,
     override val maximumWaterLevel: Double = 10.0
@@ -28,7 +28,7 @@ class SmartPotBase(
 
     override var waterVolume : Double = 0.0
         set(value) {
-            if (value < EPS || value > maximumWaterLevel - EPS) {
+            if (value < -EPS || value > maximumWaterLevel - EPS) {
                 throw Exception("Incorrect amount of water poured")
             }
             this.isWaterBoiled = false
@@ -66,9 +66,11 @@ fun SmartPot(
     enabled: Boolean = false,
     temperature: Int? = null,
     waterVolume: Double = 0.0,
-    isWaterBoiled: Boolean = true
+    isWaterBoiled: Boolean = true,
+    minimumWaterLevel: Double = 1.0,
+    maximumWaterLevel: Double = 10.0
 ): SmartPot {
-    val c = SmartPotBase(id, name, location, enabled, temperature, waterVolume, isWaterBoiled)
+    val c = SmartPotBase(id, name, location, enabled, temperature, waterVolume, isWaterBoiled, minimumWaterLevel, maximumWaterLevel)
     return SmartPot(c, SmartPotStateImpl(c))
 }
 
