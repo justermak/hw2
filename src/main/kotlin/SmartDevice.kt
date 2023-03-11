@@ -3,5 +3,4 @@ interface SmartDevice {
     val name: String
     val location: Location
     var enabled: Boolean
-
 }

@@ -10,7 +10,6 @@ interface SmartHomeProtocol {
     fun getDeviceById(id: String): SmartDevice?
 
     fun getDevicesByLocation(location: Location): List<SmartDevice>
-
 }
 
 class SmartHomeBase(
@@ -36,19 +35,17 @@ class SmartHomeBase(
     override fun getDevicesByLocation(location: Location): List<SmartDevice> = devices.filter { it.location == location }
 }
 
-
 class SmartHomeStateImpl(private val smartHome: SmartHomeProtocol) : State {
     override fun toStateString(): String = """
         Name = ${smartHome.name}
         Devices = ${smartHome.devices.map { it.name }}
-        """.trimIndent()
-
+    """.trimIndent()
 }
 
 fun SmartHome(
     id: String,
     name: String,
-    devices: MutableList<SmartDevice> = mutableListOf()
+    devices: MutableList<SmartDevice> = mutableListOf(),
 ): SmartHome {
     val c = SmartHomeBase(id, name, devices)
     return SmartHome(c, SmartHomeStateImpl(c))
@@ -56,11 +53,9 @@ fun SmartHome(
 
 class SmartHome(
     private val smartHomeBase: SmartHomeBase,
-    private val state: State
+    private val state: State,
 ) : SmartHomeProtocol by smartHomeBase, State by state {
     override fun toString(): String {
         return toStateString()
     }
 }
-
-

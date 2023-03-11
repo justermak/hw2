@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.* // ktlint-disable no-wildcard-imports
 import org.junit.jupiter.api.BeforeEach
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFails
 
@@ -13,6 +12,10 @@ class Tests {
 
     @AfterEach
     fun tearDown() {
+    }
+
+    @Test
+    fun mainTests() {
     }
 
     @Test
@@ -40,11 +43,11 @@ class Tests {
     @Test
     fun smartPotTests() {
         val x = SmartPot("First", "myFav", Location.KITCHEN)
-        assertFails{ x.boilWater() }
+        assertFails { x.boilWater() }
         x.waterVolume += 2.0
         x.boilWater()
         assertEquals(x.isWaterBoiled, true)
-        assertFails{ x.waterVolume += 20 }
+        assertFails { x.waterVolume += 20 }
     }
 
     @Test
@@ -52,11 +55,14 @@ class Tests {
         val x = SmartThermometer("First", "myFav", Location.KITCHEN)
         x.temperature = 100
         assertEquals(x.temperature, 100)
-        assertEquals(x.toString(), """
+        assertEquals(
+            x.toString(),
+            """
         Name = myFav
         Location = KITCHEN
         ...
-        """.trimIndent())
+            """.trimIndent(),
+        )
     }
 
     @Test
@@ -73,6 +79,7 @@ class Tests {
         x.register(th2)
         assertFails { x.register(th3) }
         assertArrayEquals(x.devices.toTypedArray(), arrayOf(tv1, tv2, th1, th2))
+        x.unregister(th2)
         assertArrayEquals(x.getDevicesByLocation(Location.KITCHEN).toTypedArray(), arrayOf(tv1, th1))
         assertEquals(x.getDeviceById("firsttv"), tv1)
         assertEquals(x.getDeviceById("aboba"), null)

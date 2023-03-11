@@ -15,8 +15,7 @@ class SmartThermometerStateImpl(private val smartThermometer: SmartThermometerPr
         Name = ${smartThermometer.name}
         Location = ${smartThermometer.location}
         ...
-        """.trimIndent()
-
+    """.trimIndent()
 }
 
 fun SmartThermometer(
@@ -24,7 +23,7 @@ fun SmartThermometer(
     name: String,
     location: Location,
     enabled: Boolean = false,
-    temperature: Int? = null
+    temperature: Int? = null,
 ): SmartThermometer {
     val c = SmartThermometerBase(id, name, location, enabled, temperature)
     return SmartThermometer(c, SmartThermometerStateImpl(c))
@@ -32,11 +31,10 @@ fun SmartThermometer(
 
 class SmartThermometer(
     private val smartThermometerBase: SmartThermometerBase,
-    private val state: State
+    private val state: State,
 ) : SmartThermometerProtocol by smartThermometerBase, State by state {
 
     override fun toString(): String {
         return toStateString()
     }
-
 }

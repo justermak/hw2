@@ -11,6 +11,5 @@ class SmartHomesController {
 
     fun getHomeById(id: String): SmartHome? = smartHomes.firstOrNull { it.id == id }
 
-    fun getHomes() : List<SmartHome> = smartHomes
-
+    fun getHomes(): List<SmartHome> = smartHomes
 }

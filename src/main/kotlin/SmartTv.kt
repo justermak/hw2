@@ -5,7 +5,6 @@ interface SmartTvProtocol : SmartDevice {
     fun changeChannel(newChannel: String)
 
     fun changeVolume(newVolume: Int)
-
 }
 
 class SmartTvBase(
@@ -27,7 +26,6 @@ class SmartTvBase(
         }
         volume = newVolume
     }
-
 }
 
 class SmartTvStateImpl(private val smartTv: SmartTvProtocol) : State {
@@ -35,8 +33,7 @@ class SmartTvStateImpl(private val smartTv: SmartTvProtocol) : State {
         Name = ${smartTv.name}
         Location = ${smartTv.location}
         ...
-        """.trimIndent()
-
+    """.trimIndent()
 }
 
 fun SmartTv(
@@ -45,7 +42,7 @@ fun SmartTv(
     location: Location,
     enabled: Boolean = false,
     channel: String? = null,
-    volume: Int? = null
+    volume: Int? = null,
 ): SmartTv {
     val c = SmartTvBase(id, name, location, enabled, channel, volume)
     return SmartTv(c, SmartTvStateImpl(c))
@@ -53,11 +50,10 @@ fun SmartTv(
 
 class SmartTv(
     private val smartTvBase: SmartTvBase,
-    private val state: State
+    private val state: State,
 ) : SmartTvProtocol by smartTvBase, State by state {
 
     override fun toString(): String {
         return toStateString()
     }
-
 }

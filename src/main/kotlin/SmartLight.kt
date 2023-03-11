@@ -4,7 +4,6 @@ interface SmartLightProtocol : SmartDevice {
     fun switchOff()
 
     fun switch()
-
 }
 
 class SmartLightBase(
@@ -13,7 +12,6 @@ class SmartLightBase(
     override val location: Location,
     override var enabled: Boolean,
 ) : SmartLightProtocol {
-    
     override fun switchOn() {
         enabled = true
     }
@@ -25,7 +23,6 @@ class SmartLightBase(
     override fun switch() {
         enabled = enabled xor true
     }
-    
 }
 
 class SmartLightStateImpl(private val smartLight: SmartLightProtocol) : State {
@@ -33,8 +30,7 @@ class SmartLightStateImpl(private val smartLight: SmartLightProtocol) : State {
         Name = ${smartLight.name}
         Location = ${smartLight.location}
         ...
-        """.trimIndent()
-
+    """.trimIndent()
 }
 
 fun SmartLight(
@@ -49,11 +45,10 @@ fun SmartLight(
 
 class SmartLight(
     private val smartLightBase: SmartLightBase,
-    private val state: State
+    private val state: State,
 ) : SmartLightProtocol by smartLightBase, State by state {
 
     override fun toString(): String {
         return toStateString()
     }
-
 }
